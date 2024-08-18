@@ -169,12 +169,23 @@ fn print_fields(fields: &[Fields]) {
             }
             println!();
         }
-        println!();
+        if index < fields.len() {
+            println!();
+        }
     }
 }
 
 fn calc_queens(num: u8) -> Queens {
     Queens::default(num)
+}
+
+fn calc_and_print(size: u8, print_solutions: bool) {
+    println!("Calculating solutions for {} Queens:", size);
+    let all_solutions = Fields::default(size).get_all_solutions();
+    if print_solutions {
+        print_fields(&all_solutions);
+    }
+    println!("Solved {} Queens solutions ({})", size, all_solutions.len());
 }
 
 fn main() {
@@ -197,17 +208,11 @@ fn main() {
     println!("Unsolved 8 Queens next iteration ({}):", next_iteration.len());
     print_fields(&next_iteration);
 
-    let mut all_solutions = Fields::default(4).get_all_solutions();
-    println!("Unsolved 4 Queens all solutions ({}):", all_solutions.len());
-    print_fields(&all_solutions);
-
-    all_solutions = Fields::default(6).get_all_solutions();
-    println!("Unsolved 6 Queens all solutions ({}):", all_solutions.len());
-    print_fields(&all_solutions);
-
-    all_solutions = Fields::default(8).get_all_solutions();
-    println!("Unsolved 8 Queens all solutions ({}):", all_solutions.len());
-    print_fields(&all_solutions);
+    calc_and_print(4, true);
+    println!();
+    calc_and_print(8, false);
+    println!();
+    calc_and_print(10, false);
 }
 
 #[cfg(test)]
